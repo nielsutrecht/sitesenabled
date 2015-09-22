@@ -24,6 +24,10 @@ public class SiteList {
         sites.add(root);
     }
 
+    public void load() {
+
+    }
+
     public void save() throws IOException {
         Main.createMapper().writeValue(config.getSitesFileObj(), sites);
     }

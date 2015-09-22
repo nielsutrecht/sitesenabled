@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Config {
+    private File configFile;
     private String nginxDir;
     private String sitesFile;
     private int defaultPort;
@@ -12,7 +13,11 @@ public class Config {
     private boolean defaultAddWww;
     private String defaultFileName;
 
-    public Config() {
+    public Config(File configFile) {
+        this.configFile = configFile;
+        if(configFile.exists()) {
+            load();
+        }
         nginxDir = "/etc/nginx/";
         sitesFile = "{userHome}/.sitesenabled/sites.json";
         defaultPort = 80;
@@ -83,9 +88,13 @@ public class Config {
     }
 
     File getSitesFileObj() {
-        String f = sitesFile.replace("{userHome}", System.getProperty("user.home"));
+        String f = sitesFile.replace("~", System.getProperty("user.home"));
 
         return new File(f);
+    }
+
+    private void load() {
+
     }
 
     private static File getConfigFile() {
